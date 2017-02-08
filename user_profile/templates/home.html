@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% load static from staticfiles %}
+
+{% block title %}
+    {% if not user.is_authenticated %}{{ block.super }} - Welcome
+    {% else %}{{ block.super }} - {{ user.first_name }}'s Profile
+    {% endif %}
+
+{% endblock %}
+
+{% block body %}
+    {% if not user.is_authenticated %}
+        <div class="grid-25">
+            <img class="img-responsive" src="{% static 'images/765-default-avatar.png' %}">
+        </div>
+        <div class="grid-65">
+            <h1>Welcome!</h1>
+            <p>Welcome to the Profile App! You will be able to create an account and provide details about yourself such as your name, email, date of birth, biography and even an avatar. After you have created an account, you will be able to login, logout, view your profile and change your password. Thank you for checking out my web app!</p>
+            <p>I see that you're not logged in, or haven't created an account yet. Click a button below, or at the top right corner to get started!</p>
+            <a href="{% url 'accounts:sign_in' %}" class="button">Sign In</a>
+            <a href="{% url 'accounts:sign_up' %}" class="button">Sign Up</a>
+    {% else %}
+        {# Display profile information #}
+        <div class="grid-25">
+            {% if user.avatar %}
+                User avatar here
+                {{ user.avatar }}
+            {% else %}
+                <img class="img-responsive" src="{% static 'images/765-default-avatar.png' %}">
+            {% endif %}
+        </div>
+        <div class="grid-65">
+            <h1>Your Profile</h1>
+            <h2>First Name</h2>
+            <p>{{ user.first_name }}</p>
+            <h2>Last Name</h2>
+            <p>{{ user.last_name }}</p>
+            <h2>Email</h2>
+            <p>{{ user.email }}</p>
+            <h2>Date of Birth</h2>
+            <p>{{ user.dob|date:"F d, Y" }}</p>
+            <h2>Biography</h2>
+            <p>{{ user.bio }}</p>
+
+            {# <a href="{% url 'accounts:edit_user_profile' pk=user.id %}"  class="button">Edit Profile</a> #}
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

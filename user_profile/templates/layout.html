@@ -1,0 +1,86 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>{% block title %}Circle{% endblock %}</title>
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONTS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,500'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cousine'
+          rel='stylesheet' type='text/css'>
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static "css/global.css" %}">
+
+    <!-- JS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script type="text/javascript"
+            src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript"
+            src="{% static "js/autogrow.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/global.js" %}"></script>
+
+
+</head>
+<body>
+<header class="circle--header">
+    <div class="bounds">
+        <div class="circle--fluid">
+            <div class="circle--fluid--cell">
+                <h1 class="hide-text circle--logo"><a class="logo"
+                                                      href="{% url 'home' %}">Circle</a>
+                </h1>
+            </div>
+            <div class="circle--fluid--cell circle--fluid--primary">
+                <nav>
+                    <ul class="circle--inline">
+                        <li><a href="{% url 'home' %}">Profile App</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="circle--fluid--cell circle--fluid--secondary">
+                <nav>
+                    <ul class="circle--inline">
+                        {% if not user.is_authenticated %}
+                            <li><a href="{% url 'accounts:sign_up' %}">Sign Up</a></li>
+                            <li><a href="{% url 'accounts:sign_in' %}">Sign
+                                In</a></li>
+                        {% else %}
+                            <!-- view profile link here? -->
+                            <!-- edit profile link here? -->
+                            <li><a href="{% url 'accounts:sign_out' %}">Sign Out</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="bounds circle--page">
+    {% if messages %}
+        <ul class="messages centered grid-50">
+            {% for message in messages %}
+                <li{% if message.tags %}
+                    class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% block body %}{% endblock %}
+</div>
+</body>
+</html>
