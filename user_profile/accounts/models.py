@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
+from smartfields import fields
+
 
 class UserManager(BaseUserManager):
     """Create and manage users."""
@@ -69,7 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name
 
-    def get_long_name(self):
+    def get_full_name(self):
         return "{} {} (@{})".format(self.first_name, self.last_name,
             self.username)
 
@@ -79,7 +81,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     dob = models.DateTimeField(blank=True, null=True)
     bio = models.CharField(max_length=140, blank=True, default="")
-    avatar = models.ImageField(blank=True, null=True)
+    avatar = fields.ImageField(upload_to='avatar_photos/', blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('accounts:profile', {})

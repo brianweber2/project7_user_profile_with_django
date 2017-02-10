@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% load static from staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+    {{ block.super }} - Edit {{ user.first_name}}'s' Profile
+{% endblock %}
+
+{% block body %}
+<div class="form-container" style="max-width: 500px; margin: 0 auto;">
+    <h1>Update Your Profile</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+        <legend>Basic Info</legend>
+            {% bootstrap_form form1 %}
+        </fieldset>
+        <fieldset>
+        <legend>Detailed Info</legend>
+            {% bootstrap_form form2 %}
+        </fieldset>
+        <input type="submit" value="Update Profile" class="button">
+    </form>
+</div>
+{% endblock %}

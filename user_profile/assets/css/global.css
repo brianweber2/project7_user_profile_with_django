@@ -2112,3 +2112,13 @@ input[type="email"].circle--input--h6, input[type="number"].circle--input--h6, i
 .form-container {
   max-width: 500px;
 }
+
+.btn,
+.btn-primary {
+  font-family: "Work Sans", sans-serif;
+}
+
+a.change-password {
+  color: black;
+  border-color: black;
+}

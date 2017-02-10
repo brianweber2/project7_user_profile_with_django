@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load static from staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+    {{ block.super }} - {{ user.first_name|lower|capfirst }}'s Profile
+{% endblock %}
+
+{% block body %}
+    {# Display profile information #}
+    <div class="grid-25">
+        {% if user.userprofile.avatar %}
+            <img class="img-responsive img-circle" src="{{ user.userprofile.avatar.url }}">
+        {% else %}
+            <img class="img-responsive" src="{% static 'img/765-default-avatar.png' %}">
+        {% endif %}
+    </div>
+    <div class="grid-65">
+        <h1>Your Profile</h1>
+        <h2>First Name</h2>
+        <p>{{ user.first_name|lower|capfirst }}</p>
+        <h2>Last Name</h2>
+        <p>{{ user.last_name|lower|capfirst }}</p>
+        <h2>Email</h2>
+        <p>{{ user.email }}</p>
+        <h2>Date of Birth</h2>
+        {% if user.userprofile.dob %}
+            <p>{{ user.userprofile.dob|date:"F d, Y" }}</p>
+        {% else %}
+            <p>Add date of birth by clicking <a href="#edit_button">edit button</a> below.</p>
+        {% endif %}
+        <h2>Biography</h2>
+        {% if user.userprofile.bio %}
+            {% autoescape on %}
+                <p>{{ user.userprofile.bio }}</p>
+            {% endautoescape %}
+        {% else %}
+            <p>Add biography by clicking <a href="#edit_button">edit button</a> below.</p>
+        {% endif %}
+        <div class="row buttons">
+            <a id="#edit_button" href="{% url 'accounts:edit_profile' %}"  class="button" role="button" style="text-decoration: none;">Edit Profile</a>
+            <a href="{% url 'accounts:change_password' %}" class="button" role="button" style="color: black; border-color: black;">Change Password</a>
+        </div>
+    </div>
+{% endblock %}
