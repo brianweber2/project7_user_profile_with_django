@@ -2122,3 +2122,7 @@ a.change-password {
   color: black;
   border-color: black;
 }
+
+.circle--header {
+  background: #222f3e;
+}

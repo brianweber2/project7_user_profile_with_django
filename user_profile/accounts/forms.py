@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django import forms
+from django.utils.safestring import mark_safe
 
 from smartfields import fields
 import re
@@ -39,11 +40,11 @@ class UserProfileUpdateForm(forms.ModelForm):
     """Update user profile information."""
     avatar = fields.ImageField(blank=True)
     dob = forms.DateTimeField(label='Date of Birth', required=False,
-        input_formats=['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
-        widget=forms.DateInput(format='%m/%d/%Y'))
+                            input_formats=['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
+                            widget=forms.DateInput(format='%m/%d/%Y'))
     bio = forms.CharField(max_length=140, label='Biography',
-        widget=forms.Textarea(attrs={'rows': 6}), required=False,
-        min_length=10)
+                    widget=forms.Textarea(attrs={'rows': 6}), required=False,
+                    min_length=10)
 
     class Meta:
         model = models.UserProfile
@@ -79,6 +80,18 @@ class ValidatingPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super(ValidatingPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].help_text = mark_safe(
+            '<ul>\n'
+            '<li>Must not be the same as the current password</li>\n'
+            '<li>Minimum password length of 14 characters</li>\n'
+            '<li>Must use both uppercase and lowercase letters</li>\n'
+            '<li>Must include one or more numerical digits</li>\n'
+            '<li>Must include at least one special character, such as @, #, or'
+            ' $</li>\n'
+            "<li>Cannot contain your username or parts of your full name, "
+            'such as your first name</li>\n'
+            '</ul>'
+        )
 
     def clean(self):
         user = self.request.user
@@ -94,16 +107,18 @@ class ValidatingPasswordChangeForm(PasswordChangeForm):
             raise forms.ValidationError("Your old password was entered "
                 "incorrectly. Please enter it again. ")
 
+        # Must use both uppercase and lowercase letters
+        if not re.search('([a-z])+', new_password) or \
+          not re.search('([A-Z])+', new_password):
+            raise forms.ValidationError("The new password must use both "
+                "uppercase and lowercase letters.")
+
         # Minimum password length of 14 characters
         if len(new_password) < self.MIN_LENGTH:
             raise forms.ValidationError(
-                "The new password must be at least %d characters long." % self.MIN_LENGTH
+                "The new password must be at least %d characters long." %
+                self.MIN_LENGTH
             )
-
-        # Must use both uppercase and lowercase letters
-        if not re.search('([a-zA-Z])+', new_password):
-            raise forms.ValidationError("The new password must use both "
-                "uppercase and lowercase letters.")
 
         # Must include of one or more numerical digits
         if not re.search('\d+', new_password):
@@ -122,9 +137,9 @@ class ValidatingPasswordChangeForm(PasswordChangeForm):
         user_username = user.username.lower()
 
         if (user_first_name in new_password.lower() or user_last_name in
-            new_password.lower() or user_username in new_password.lower()):
+          new_password.lower() or user_username in new_password.lower()):
             raise forms.ValidationError("The new password cannot contain your "
                 "username ({}) or parts of your full name ({} {}).".format(
                     user.username, user.first_name, user.last_name))
 
-        return new_password
+        return self.cleaned_data
