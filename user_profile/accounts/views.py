@@ -17,8 +17,11 @@ def sign_in(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            if form.user_cache is not None:
-                user = form.user_cache
+            user = authenticate(
+                email=request.POST['email'],
+                password=request.POST['password']
+            )
+            if user is not None:
                 if user.is_active:
                     login(request, user)
                     messages.success(request, "You've been logged in.")

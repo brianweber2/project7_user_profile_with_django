@@ -25,7 +25,7 @@ SECRET_KEY = '6+@3oo)$m3p%$k36(_4a#(7=sv%%0ogu35)&s@%2gfz7)_dlx&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'testserver']
 
 # Application definition
 
@@ -134,3 +134,13 @@ AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_URL = '/accounts/sign_in/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
+
+## Testing
+# # Use nose to run all tests
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# # Tell nose to measure coverage on the specified apps
+# NOSE_ARGS = [
+#     '--with-coverage',
+#     '--cover-package=accounts',
+# ]

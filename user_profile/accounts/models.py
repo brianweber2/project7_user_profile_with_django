@@ -83,9 +83,6 @@ class UserProfile(models.Model):
     bio = models.CharField(max_length=140, blank=True, default="")
     avatar = fields.ImageField(upload_to='avatar_photos/', blank=True, null=True)
 
-    def get_absolute_url(self):
-        return reverse('accounts:profile', {})
-
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

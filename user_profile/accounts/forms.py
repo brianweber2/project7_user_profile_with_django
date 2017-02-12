@@ -27,13 +27,14 @@ class UserCreateForm(UserCreationForm):
 
     def clean(self):
         data = self.cleaned_data
-        email = data['email']
-        verify = data['verify_email']
+        email = data.get('email')
+        verify = data.get('verify_email')
 
         if email != verify:
             raise forms.ValidationError(
                 "You need to enter the same email in both fields"
             )
+        return data
 
 
 class UserProfileUpdateForm(forms.ModelForm):
@@ -64,8 +65,8 @@ class UserUpdateForm(forms.ModelForm):
 
     def clean(self):
         data = self.cleaned_data
-        email = data['email']
-        verify = data['verify_email']
+        email = data.get('email')
+        verify = data.get('verify_email')
 
         if email != verify:
             raise forms.ValidationError(
