@@ -70,7 +70,11 @@ class UserViewTests(TestDataMixin, TestCase):
                 'email': 'testclient@example.com',
                 'verify_email': 'testclient@example.com',
                 'dob': '1988-06-19',
-                'bio': 'This is my bio.'
+                'bio': 'This is my bio.',
+                'location': 'San Diego, CA',
+                'country': 'US',
+                'fav_animal': 'Dog',
+                'hobby': 'Surfing'
             }
         )
         self.assertEqual(response.status_code, 302)

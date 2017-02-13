@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'django_password_strength',
+    'django_countries',
     'smartfields',
     'accounts',
 ]

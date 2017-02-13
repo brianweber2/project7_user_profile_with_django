@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from smartfields import fields
+from django_countries.fields import CountryField
 
 
 class UserManager(BaseUserManager):
@@ -80,8 +81,12 @@ class UserProfile(models.Model):
     """User profile data."""
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     dob = models.DateTimeField(blank=True, null=True)
-    bio = models.CharField(max_length=140, blank=True, default="")
+    bio = models.CharField(max_length=140, blank=True, null=True)
     avatar = fields.ImageField(upload_to='avatar_photos/', blank=True, null=True)
+    location = models.CharField(max_length=40, blank=True, null=True)
+    country = CountryField(blank=True, null=True)
+    fav_animal = models.CharField(max_length=40, blank=True, null=True)
+    hobby = models.CharField(max_length=40, blank=True, null=True)
 
 
 def create_user_profile(sender, instance, created, **kwargs):

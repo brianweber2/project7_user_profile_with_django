@@ -206,7 +206,7 @@
 <p id="t18" class="stm run hide_run">        <span class="nam">form</span> <span class="op">=</span> <span class="nam">AuthenticationForm</span><span class="op">(</span><span class="nam">data</span><span class="op">=</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t19" class="stm par run hide_run"><span class="annotate short">19&#x202F;&#x219B;&#x202F;20</span><span class="annotate long">line 19 didn't jump to line 20, because the condition on line 19 was never true</span>        <span class="key">if</span> <span class="nam">form</span><span class="op">.</span><span class="nam">is_valid</span><span class="op">(</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t20" class="stm mis">            <span class="nam">user</span> <span class="op">=</span> <span class="nam">authenticate</span><span class="op">(</span><span class="strut">&nbsp;</span></p>
-<p id="t21" class="pln">                <span class="nam">email</span><span class="op">=</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">[</span><span class="str">'email'</span><span class="op">]</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t21" class="pln">                <span class="nam">email</span><span class="op">=</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">[</span><span class="str">'username'</span><span class="op">]</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t22" class="pln">                <span class="nam">password</span><span class="op">=</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">[</span><span class="str">'password'</span><span class="op">]</span><span class="strut">&nbsp;</span></p>
 <p id="t23" class="pln">            <span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t24" class="stm mis">            <span class="key">if</span> <span class="nam">user</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
@@ -310,7 +310,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.3.4</a>,
-            created at 2017-02-11 20:46
+            created at 2017-02-12 12:41
         </p>
     </div>
 </div>

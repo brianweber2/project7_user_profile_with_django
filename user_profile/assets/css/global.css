@@ -836,8 +836,8 @@ button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
-  box-shadow: 0 0 0 2px #537d7b inset;
-  color: #537d7b;
+  box-shadow: 0 0 0 2px #222f3e inset;
+  color: #222f3e;
   outline: 0;
 }
 /* line 32, ../sass/circle/core/buttons.sass */
@@ -2111,6 +2111,7 @@ input[type="email"].circle--input--h6, input[type="number"].circle--input--h6, i
 /* Custom Styles */
 .form-container {
   max-width: 500px;
+  padding: 25px;
 }
 
 .btn,

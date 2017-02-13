@@ -2,8 +2,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django import forms
+from django.contrib.admin.widgets import AdminDateWidget
 from django.utils.safestring import mark_safe
 
+from django_password_strength.widgets import (
+    PasswordStrengthInput,
+    PasswordConfirmationInput
+)
+from django_countries import widgets, countries
 from smartfields import fields
 import re
 
@@ -40,16 +46,42 @@ class UserCreateForm(UserCreationForm):
 class UserProfileUpdateForm(forms.ModelForm):
     """Update user profile information."""
     avatar = fields.ImageField(blank=True)
-    dob = forms.DateTimeField(label='Date of Birth', required=False,
+    dob = forms.DateTimeField(label='Date of Birth',
                             input_formats=['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
-                            widget=forms.DateInput(format='%m/%d/%Y'))
+                            widget=forms.SelectDateWidget(
+                                years=range(1917,2017)
+                            )
+    )
     bio = forms.CharField(max_length=140, label='Biography',
-                    widget=forms.Textarea(attrs={'rows': 6}), required=False,
-                    min_length=10)
+                    widget=forms.Textarea(attrs={'rows': 6}), min_length=10)
+    location = forms.CharField(
+        max_length=40,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter city, state'}),
+    )
+    country = forms.ChoiceField(
+        widget=widgets.CountrySelectWidget,
+        choices=countries,
+        label='Country of Residence'
+    )
+    fav_animal = forms.CharField(
+        max_length=40,
+        label='Favorite Animal',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Enter your favorite animal'}
+        )
+    )
+    hobby = forms.CharField(
+        max_length=40,
+        label='Favorite Hobby',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Enter your favorite hobby'}
+        )
+    )
 
     class Meta:
         model = models.UserProfile
-        fields = ['avatar', 'dob', 'bio']
+        fields = ['avatar', 'dob', 'bio', 'location', 'country',
+                'fav_animal', 'hobby']
         labels = {
             'avatar': _('Your Photo'),
         }
@@ -77,6 +109,24 @@ class UserUpdateForm(forms.ModelForm):
 class ValidatingPasswordChangeForm(PasswordChangeForm):
     """Form for changing user's password."""
     MIN_LENGTH = 14
+
+    class Media:
+        js = (
+            'js/zxcvbn.js',
+            'js/password-strength.js'
+        )
+
+    new_password1 = forms.CharField(
+        widget=PasswordStrengthInput(attrs={'placeholder': 'New password'}),
+        label='New Password'
+    )
+    new_password2 = forms.CharField(
+        widget=PasswordConfirmationInput(
+            attrs={'placeholder': 'Confirm new password'},
+            confirm_with='new_password1'
+        ),
+        label='Confirm Password'
+    )
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)

@@ -37,9 +37,33 @@
         {% else %}
             <p>Add biography by clicking <a href="#edit_button">edit button</a> below.</p>
         {% endif %}
-        <div class="row buttons">
+        <h2>Location</h2>
+        {% if user.userprofile.location %}
+            <p>{{ user.userprofile.location }}</p>
+        {% else %}
+            <p>Add city and state by clicking <a href="#edit_button">edit button</a> below.</p>
+        {% endif %}
+        <h2>Country of Residence</h2>
+        {% if user.userprofile.country %}
+            <p>{{ user.userprofile.country }}</p>
+        {% else %}
+            <p>Add country of residence by clicking <a href="#edit_button">edit button</a> below.</p>
+        {% endif %}
+        <h2>Favorite Animal</h2>
+        {% if user.userprofile.fav_animal %}
+            <p>{{ user.userprofile.fav_animal }}</p>
+        {% else %}
+            <p>Add your favorite animal by clicking <a href="#edit_button">edit button</a> below.</p>
+        {% endif %}
+        <h2>Favorite Hobby</h2>
+        {% if user.userprofile.hobby %}
+            <p>{{ user.userprofile.hobby }}</p>
+        {% else %}
+            <p>Add your favorite hobby by clicking <a href="#edit_button">edit button</a> below.</p>
+        {% endif %}
+        <div id="#edit_button" class="row buttons">
             <a id="#edit_button" href="{% url 'accounts:edit_profile' %}"  class="button" role="button" style="text-decoration: none;">Edit Profile</a>
-            <a href="{% url 'accounts:change_password' %}" class="button" role="button" style="color: black; border-color: black;">Change Password</a>
+            <a href="{% url 'accounts:change_password' %}" class="button" role="button" style="color: #222f3e; border-color: #222f3e; text-decoration: none;">Change Password</a>
         </div>
     </div>
 {% endblock %}

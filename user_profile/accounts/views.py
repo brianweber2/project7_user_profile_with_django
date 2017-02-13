@@ -18,7 +18,7 @@ def sign_in(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = authenticate(
-                email=request.POST['email'],
+                email=request.POST['username'],
                 password=request.POST['password']
             )
             if user is not None:
