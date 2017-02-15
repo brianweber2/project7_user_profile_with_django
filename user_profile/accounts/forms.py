@@ -110,12 +110,6 @@ class ValidatingPasswordChangeForm(PasswordChangeForm):
     """Form for changing user's password."""
     MIN_LENGTH = 14
 
-    class Media:
-        js = (
-            'js/zxcvbn.js',
-            'js/password-strength.js'
-        )
-
     new_password1 = forms.CharField(
         widget=PasswordStrengthInput(attrs={'placeholder': 'New password'}),
         label='New Password'
