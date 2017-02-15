@@ -1,0 +1,9 @@
+colorama==0.3.7
+coverage==4.3.4
+Django==1.10.5
+django-bootstrap3==8.1.0
+django-countries==4.0
+django-password-strength==1.2.1
+django-smartfields==1.0.9
+olefile==0.44
+Pillow==4.0.0

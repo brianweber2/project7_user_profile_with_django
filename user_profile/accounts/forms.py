@@ -122,6 +122,9 @@ class ValidatingPasswordChangeForm(PasswordChangeForm):
         label='Confirm Password'
     )
 
+    class Meta:
+        fields = ['new_password1', 'new_password2']
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super(ValidatingPasswordChangeForm, self).__init__(*args, **kwargs)

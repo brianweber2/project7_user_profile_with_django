@@ -192,6 +192,14 @@ class UserModelTests(TestDataMixin, TestCase):
 ################################
 ########## Form Tests ##########
 ################################
+class UserSignInFormTests(TestDataMixin, TestCase):
+
+    def test_user_login(self):
+        data = {'username': 'testclient@example.com', 'password': 'password'}
+        form = AuthenticationForm(data=data)
+        self.assertTrue(form.is_valid())
+
+
 class UserCreateFormTests(TestCase):
 
     # Valid form data
